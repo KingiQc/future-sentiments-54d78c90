@@ -1,17 +1,20 @@
 import { Lock, Send } from "lucide-react";
 import { Letter, calculateProgress, formatDate } from "@/lib/letters";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface HighlightCardProps {
   letter: Letter;
 }
 
 const HighlightCard = ({ letter }: HighlightCardProps) => {
+  const navigate = useNavigate();
   const progress = calculateProgress(letter.sentDate, letter.deliveryDate);
   const percent = Math.round(progress * 100);
 
   return (
     <motion.div
+      onClick={() => navigate(`/letter/${letter.id}`)}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}

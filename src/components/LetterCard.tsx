@@ -1,6 +1,7 @@
 import { Timer } from "lucide-react";
 import { Letter, formatDate, getCountdownText } from "@/lib/letters";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface LetterCardProps {
   letter: Letter;
@@ -8,8 +9,10 @@ interface LetterCardProps {
 }
 
 const LetterCard = ({ letter, index }: LetterCardProps) => {
+  const navigate = useNavigate();
   return (
     <motion.div
+      onClick={() => navigate(`/letter/${letter.id}`)}
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 * index, duration: 0.35 }}
