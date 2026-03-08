@@ -63,32 +63,38 @@ const FollowPage = () => {
     loadFollowed();
   }, [user]);
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim() || !user) return;
-    setSearching(true);
+  useEffect(() => {
+    const searchUsers = async () => {
+      if (!searchQuery.trim() || !user) {
+        setSearchResults([]);
+        return;
+      }
 
-    const query = searchQuery.trim();
-    const { data: profiles } = await supabase
-      .from("profiles")
-      .select("*")
-      .neq("user_id", user.id)
-      .or(`username.ilike.%${query}%,name.ilike.%${query}%,phone.ilike.%${query}%`);
+      const query = searchQuery.trim();
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("*")
+        .neq("user_id", user.id)
+        .or(`username.ilike.%${query}%,name.ilike.%${query}%,phone.ilike.%${query}%`);
 
-    const { data: follows } = await supabase
-      .from("follows")
-      .select("following_id")
-      .eq("follower_id", user.id);
+      const { data: follows } = await supabase
+        .from("follows")
+        .select("following_id")
+        .eq("follower_id", user.id);
 
-    const followingIds = new Set(follows?.map((f) => f.following_id) || []);
+      const followingIds = new Set(follows?.map((f) => f.following_id) || []);
 
-    setSearchResults(
-      (profiles || []).map((p) => ({
-        ...p,
-        is_following: followingIds.has(p.user_id),
-      }))
-    );
-    setSearching(false);
-  };
+      setSearchResults(
+        (profiles || []).map((p) => ({
+          ...p,
+          is_following: followingIds.has(p.user_id),
+        }))
+      );
+    };
+
+    const debounce = setTimeout(searchUsers, 300);
+    return () => clearTimeout(debounce);
+  }, [searchQuery, user]);
 
   const handleFollow = async (targetUserId: string) => {
     if (!user) return;
