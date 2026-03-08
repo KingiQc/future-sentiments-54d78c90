@@ -9,6 +9,7 @@ import { isPasscodeEnabled, setPasscode, removePasscode, verifyPasscode } from "
 import { useState, useRef } from "react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { requestNotificationPermission, isNotificationEnabled } from "@/lib/notifications";
 
 const SettingsPage = () => {
   const navigate = useNavigate();
