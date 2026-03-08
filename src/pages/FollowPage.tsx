@@ -31,7 +31,7 @@ const FollowPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [followedUsers, setFollowedUsers] = useState<FollowedUser[]>([]);
-  const [searching, setSearching] = useState(false);
+  
 
   const loadFollowed = async () => {
     if (!user) return;
@@ -63,32 +63,38 @@ const FollowPage = () => {
     loadFollowed();
   }, [user]);
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim() || !user) return;
-    setSearching(true);
+  useEffect(() => {
+    const searchUsers = async () => {
+      if (!searchQuery.trim() || !user) {
+        setSearchResults([]);
+        return;
+      }
 
-    const query = searchQuery.trim();
-    const { data: profiles } = await supabase
-      .from("profiles")
-      .select("*")
-      .neq("user_id", user.id)
-      .or(`username.ilike.%${query}%,name.ilike.%${query}%,phone.ilike.%${query}%`);
+      const query = searchQuery.trim();
+      const { data: profiles } = await supabase
+        .from("profiles")
+        .select("*")
+        .neq("user_id", user.id)
+        .or(`username.ilike.%${query}%,name.ilike.%${query}%,phone.ilike.%${query}%`);
 
-    const { data: follows } = await supabase
-      .from("follows")
-      .select("following_id")
-      .eq("follower_id", user.id);
+      const { data: follows } = await supabase
+        .from("follows")
+        .select("following_id")
+        .eq("follower_id", user.id);
 
-    const followingIds = new Set(follows?.map((f) => f.following_id) || []);
+      const followingIds = new Set(follows?.map((f) => f.following_id) || []);
 
-    setSearchResults(
-      (profiles || []).map((p) => ({
-        ...p,
-        is_following: followingIds.has(p.user_id),
-      }))
-    );
-    setSearching(false);
-  };
+      setSearchResults(
+        (profiles || []).map((p) => ({
+          ...p,
+          is_following: followingIds.has(p.user_id),
+        }))
+      );
+    };
+
+    const debounce = setTimeout(searchUsers, 300);
+    return () => clearTimeout(debounce);
+  }, [searchQuery, user]);
 
   const handleFollow = async (targetUserId: string) => {
     if (!user) return;
@@ -141,26 +147,15 @@ const FollowPage = () => {
           </motion.h1>
 
           {/* Search */}
-          <div className="flex gap-2">
-            <div className="flex-1 bg-card rounded-lg px-4 py-3 flex items-center gap-3">
-              <Search size={16} className="text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search by username, name, or phone..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                className="flex-1 bg-transparent text-[15px] text-foreground placeholder:text-muted-foreground/50 outline-none"
-              />
-            </div>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={handleSearch}
-              disabled={searching}
-              className="px-4 rounded-lg bg-primary text-primary-foreground font-medium text-sm"
-            >
-              Search
-            </motion.button>
+          <div className="bg-card rounded-lg px-4 py-3 flex items-center gap-3">
+            <Search size={16} className="text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search by username, name, or phone..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 bg-transparent text-[15px] text-foreground placeholder:text-muted-foreground/50 outline-none"
+            />
           </div>
         </div>
 
