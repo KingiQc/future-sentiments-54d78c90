@@ -1,10 +1,12 @@
-import { Mail, Unlock, Lock } from "lucide-react";
+import { Mail, Unlock, Lock, Reply } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
 import { getReceivedLetters, clearUnread, formatDate, isDelivered } from "@/lib/letters";
 import { useState, useEffect } from "react";
 
 const ReceivedPage = () => {
+  const navigate = useNavigate();
   const [openId, setOpenId] = useState<string | null>(null);
   const [letters, setLetters] = useState(getReceivedLetters());
   const [unlocking, setUnlocking] = useState<string | null>(null);
@@ -104,6 +106,16 @@ const ReceivedPage = () => {
                       <p className="text-xs text-muted-foreground/60 mt-2">
                         Sent {formatDate(letter.sentDate)}
                       </p>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/reply/${letter.id}`);
+                        }}
+                        className="mt-3 flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium"
+                      >
+                        <Reply size={14} />
+                        Reply
+                      </button>
                     </motion.div>
                   )}
                 </AnimatePresence>

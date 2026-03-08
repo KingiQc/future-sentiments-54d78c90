@@ -17,6 +17,7 @@ import ProfilePage from "./pages/ProfilePage";
 import LetterDetailPage from "./pages/LetterDetailPage";
 import FollowPage from "./pages/FollowPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ReplyLetterPage from "./pages/ReplyLetterPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
                 <Route path="/letter/:id" element={<LetterDetailPage />} />
                 <Route path="/follow" element={<FollowPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
+                <Route path="/reply/:id" element={<ReplyLetterPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
