@@ -15,10 +15,6 @@ const SentPage = () => {
   const { user, loading } = useAuth();
   const [letters, setLetters] = useState(getSentLetters());
 
-  if (!loading && !user) {
-    return <Navigate to="/login" replace />;
-  }
-
   useEffect(() => {
     const delivered = processDeliveries();
     if (delivered.length > 0) {
@@ -32,6 +28,10 @@ const SentPage = () => {
       });
     }
   }, []);
+
+  if (!loading && !user) {
+    return <Navigate to="/login" replace />;
+  }
 
   const nextDelivery = letters[0];
   const upcoming = letters.slice(1);
