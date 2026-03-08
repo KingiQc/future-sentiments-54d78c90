@@ -112,12 +112,6 @@ const SettingsPage = () => {
       onClick: toggleTheme,
     },
     {
-      icon: Palette,
-      label: "Accent Color",
-      desc: "Customize your theme color",
-      onClick: () => setShowColorPicker(!showColorPicker),
-    },
-    {
       icon: Lock,
       label: "Passcode Lock",
       desc: passcodeEnabled ? "Enabled" : "Protect your letters",
