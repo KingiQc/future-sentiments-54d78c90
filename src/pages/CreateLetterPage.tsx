@@ -122,7 +122,7 @@ const CreateLetterPage = () => {
             <MediaAttachments attachments={attachments} onChange={setAttachments} />
           </div>
 
-          {/* Delivery Date */}
+          {/* Delivery Date & Time */}
           <div className="bg-card rounded-lg p-4">
             <label className="text-sm text-muted-foreground mb-2 block">Delivery Date</label>
             <div className="flex items-center gap-3">
@@ -131,6 +131,16 @@ const CreateLetterPage = () => {
                 type="date"
                 value={deliveryDate}
                 onChange={(e) => setDeliveryDate(e.target.value)}
+                min={new Date().toISOString().split("T")[0]}
+                className={`flex-1 bg-transparent text-[15px] text-foreground outline-none ${theme === "dark" ? "[color-scheme:dark]" : "[color-scheme:light]"}`}
+              />
+            </div>
+            <div className="flex items-center gap-3 mt-3">
+              <Clock size={16} className="text-primary" />
+              <input
+                type="time"
+                value={deliveryTime}
+                onChange={(e) => setDeliveryTime(e.target.value)}
                 className={`flex-1 bg-transparent text-[15px] text-foreground outline-none ${theme === "dark" ? "[color-scheme:dark]" : "[color-scheme:light]"}`}
               />
             </div>
