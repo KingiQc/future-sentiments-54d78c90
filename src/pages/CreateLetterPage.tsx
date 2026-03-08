@@ -6,6 +6,7 @@ import { saveSentLetter, Letter } from "@/lib/letters";
 import { toast } from "@/hooks/use-toast";
 import { useTheme } from "@/hooks/use-theme";
 import MediaAttachments, { Attachment } from "@/components/MediaAttachments";
+import { scheduleLetterNotification } from "@/lib/notifications";
 
 const CreateLetterPage = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const CreateLetterPage = () => {
       attachments: attachments.length > 0 ? attachments : undefined,
     };
     saveSentLetter(letter);
+    scheduleLetterNotification(title, deliveryDate, recipientName || undefined);
     toast({
       title: "✉️ Letter Scheduled!",
       description: `"${title}" will be delivered on ${new Date(deliveryDate).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}.`,
