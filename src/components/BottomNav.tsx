@@ -24,10 +24,7 @@ const BottomNav = () => {
 
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[calc(100%-2.5rem)] max-w-md z-50">
-      <motion.div
-        initial={{ y: 40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.4 }}
+      <div
         className="flex items-center justify-around rounded-full bg-card/90 backdrop-blur-lg border border-border py-2 px-2"
       >
         {tabs.map((tab) => {
