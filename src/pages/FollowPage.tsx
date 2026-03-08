@@ -147,26 +147,15 @@ const FollowPage = () => {
           </motion.h1>
 
           {/* Search */}
-          <div className="flex gap-2">
-            <div className="flex-1 bg-card rounded-lg px-4 py-3 flex items-center gap-3">
-              <Search size={16} className="text-muted-foreground" />
-              <input
-                type="text"
-                placeholder="Search by username, name, or phone..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                className="flex-1 bg-transparent text-[15px] text-foreground placeholder:text-muted-foreground/50 outline-none"
-              />
-            </div>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={handleSearch}
-              disabled={searching}
-              className="px-4 rounded-lg bg-primary text-primary-foreground font-medium text-sm"
-            >
-              Search
-            </motion.button>
+          <div className="bg-card rounded-lg px-4 py-3 flex items-center gap-3">
+            <Search size={16} className="text-muted-foreground" />
+            <input
+              type="text"
+              placeholder="Search by username, name, or phone..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="flex-1 bg-transparent text-[15px] text-foreground placeholder:text-muted-foreground/50 outline-none"
+            />
           </div>
         </div>
 
