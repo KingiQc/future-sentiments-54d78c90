@@ -207,21 +207,6 @@ const SettingsPage = () => {
                 <ChevronRight size={18} className="text-muted-foreground" />
               </motion.div>
 
-              {/* Color picker inline */}
-              <AnimatePresence>
-                {item.label === "Accent Color" && showColorPicker && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="bg-card rounded-lg p-4 mt-1">
-                      <AccentColorPicker />
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
           ))}
         </div>
