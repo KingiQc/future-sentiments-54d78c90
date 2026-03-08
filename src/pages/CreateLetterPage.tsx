@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Calendar, Lock, Send, User, Phone } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Lock, Send, User, Phone } from "lucide-react";
 import { saveSentLetter, Letter } from "@/lib/letters";
 import { toast } from "@/hooks/use-toast";
 import { useTheme } from "@/hooks/use-theme";
