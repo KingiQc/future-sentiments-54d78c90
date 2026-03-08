@@ -15,7 +15,6 @@ const SettingsPage = () => {
   const { theme, toggleTheme } = useTheme();
   const { user, profile, signOut, refreshProfile } = useAuth();
   const [showPasscodeModal, setShowPasscodeModal] = useState(false);
-  const [showColorPicker, setShowColorPicker] = useState(false);
   const [passcodeInput, setPasscodeInput] = useState("");
   const [passcodeConfirm, setPasscodeConfirm] = useState("");
   const [passcodeStep, setPasscodeStep] = useState<"enter" | "confirm" | "remove">("enter");
