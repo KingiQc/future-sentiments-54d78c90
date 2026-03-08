@@ -41,6 +41,7 @@ const App = () => (
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/letter/:id" element={<LetterDetailPage />} />
                 <Route path="/follow" element={<FollowPage />} />
+                <Route path="/reset-password" element={<ResetPasswordPage />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
